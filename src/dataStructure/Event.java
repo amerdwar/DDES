@@ -23,4 +23,9 @@ public class Event {
 	       // Will throw an exception if y is not an Event
 	        return (this.ts < e.ts);
 	    }
+	 
+	 public String toString(){
+		 
+	return s+"  "+d+"  "+ts+"  "+tag;
+	 }
 }

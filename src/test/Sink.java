@@ -2,8 +2,6 @@ package test;
 
 import dataStructure.AbstractEntity;
 import dataStructure.Event;
-import dataStructure.InChannel;
-import dataStructure.OutChannel;
 
 public class Sink extends AbstractEntity{
 public int num=0;

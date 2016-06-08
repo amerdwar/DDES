@@ -1,7 +1,7 @@
 package dataStructure;
 
 
-import java.util.Vector;
+import java.util.PriorityQueue;
 
 public class InChannel {
 
@@ -9,19 +9,19 @@ public class InChannel {
 	public String from;
 	public double  cc;
 	public String name;
-    private Vector<Event> chQ;
+    private PriorityQueue<Event> chQ;
   public InChannel(String name){
 	  this.name=name;
 	  cc=0;
-	  chQ=new Vector<Event>();
+	  chQ=new PriorityQueue<Event>();
   } 
    
     
 	
-	public Vector<Event> getChQ() {
+	public PriorityQueue<Event> getChQ() {
 		return chQ;
 	}
-	public void setChQ(Vector<Event> chQ) {
+	public void setChQ(PriorityQueue<Event> chQ) {
 		this.chQ = chQ;
 	}
 
@@ -34,20 +34,10 @@ public class InChannel {
 		
 	}
 	
-	public Event removeElement(Event e){
-		for(int i=0;i<size();i++){
-			if(chQ.elementAt(i).equals(e)){
-				return chQ.remove(i);
-				
-			}
-			
-		}
-		return null;
-		
-	}
+	
 	public Event removeLastElement(){
 		if (size()>0){
-		Event e =chQ.remove(chQ.size()-1);
+		Event e =chQ.poll();
 		this.cc=e.ts;
 		return e;
 		}
@@ -56,7 +46,7 @@ public class InChannel {
 	}
 
 	public Event firstElement(){
-		return chQ.elementAt(0);
+		return chQ.peek();
 		
 	}
 	public int size(){

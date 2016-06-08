@@ -1,10 +1,8 @@
 package test;
 
-import akka.event.Logging;
-import akka.event.LoggingAdapter;
 import dataStructure.AbstractEntity;
 import dataStructure.Event;
-import dataStructure.OutChannel;
+
 
 public class Source extends AbstractEntity{
 
