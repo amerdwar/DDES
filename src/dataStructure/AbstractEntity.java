@@ -4,6 +4,7 @@ package dataStructure;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import akka.actor.PoisonPill;
 import akka.actor.ActorSelection;
 import akka.actor.UntypedActor;
 import akka.event.Logging;
@@ -124,9 +125,8 @@ public abstract class AbstractEntity extends UntypedActor implements entityInter
 		     flushMyOutChannel();
 		
 	
-	  }else
+	  }else if (message instanceof Config){
 		  log.info("recieve con");
-	  if (message instanceof Config){
 		  Config con=(Config) message;
 		  if(con.opType.equals("in")){
 			InChannel in=incTemp.get(con.name);
@@ -154,6 +154,17 @@ public abstract class AbstractEntity extends UntypedActor implements entityInter
 			  
 		  }
 		  
+	  }else if(message instanceof ShutDown){
+		  //send shutdown to all outputs
+		  ShutDown sh=new ShutDown();
+		     Iterator<Entry<String, OutChannel>> it = outc.entrySet().iterator();
+		     while(it.hasNext()){
+		    	 OutChannel ou=it.next().getValue();
+		    	 ActorSelection a = getContext().actorSelection( ou.to);
+		         
+		    	 a.tell(sh, this.getSelf());
+		     }
+		     getSelf().tell(PoisonPill.getInstance(), getSelf());
 	  }
 	 
     	 
@@ -220,7 +231,15 @@ public abstract class AbstractEntity extends UntypedActor implements entityInter
 		} 
 		
 	}
-
+	public void endSimulation(){
+		 
+		getSelf().tell(new ShutDown(), getSelf());
+		
+	}
+	@Override
+	public void postStop(){
+		log.info("the simulation is end of ref {}",getSelf().path().toString());
+	}
 }
 
 	

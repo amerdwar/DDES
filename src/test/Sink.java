@@ -37,6 +37,10 @@ addOutChannel("sinkOut");
 		log.info("I need more");
 		addToOut(ee,"sinkOut");
 		}
+		else{
+			endSimulation();
+			
+		}
 		
 	}
 		
